@@ -2,27 +2,34 @@ from selenium import webdriver
 from selenium.webdriver.common.by import By
 import time
 
-# Start browser and open the website
-driver = webdriver.Chrome()
-driver.maximize_window()
+def open_browser():
+    driver = webdriver.Chrome()
+    driver.maximize_window()
 
-# Open the website
-driver.get("https://www.saucedemo.com/")
-time.sleep(2)
+    # Open the website
+    driver.get("https://www.saucedemo.com/")
+    time.sleep(2)
+    return driver
 
-# Login using attributes (ID)
-driver.find_element(By.ID, "user-name").send_keys("problem_user")
-driver.find_element(By.ID, "password").send_keys("secret_sauce")
-driver.find_element(By.ID, "login-button").click()
-time.sleep(2)
+# Function: Login using attribute (ID)
+def login_with_attribute(driver, username, password):
+    driver.find_element(By.ID, "user-name").send_keys(username)
+    driver.find_element(By.ID, "password").send_keys(password)
+    driver.find_element(By.ID, "login-button").click()
 
-# Check login using XPath
-try:
-    title = driver.find_element(By.XPATH, "//span[@class='title']").text
-    print("Login successful! Page title:", title)
-except:
-    print("Login failed.")
+# Function: Login using short XPath
+def login_with_xpath(driver, username, password):
+    driver.find_element(By.XPATH, "//input[@id='user-name']").send_keys(username)
+    driver.find_element(By.XPATH, "//input[@id='password']").send_keys(password)
+    driver.find_element(By.XPATH, "//input[@id='login-button']").click()
 
-# Close browser
+# Use either one of the two login methods
+driver = open_browser()
+
+# Login with attribute
+login_with_attribute(driver, "standard_user", "secret_sauce")
+
+# login_with_xpath(driver, "standard_user", "secret_sauce")
+
 time.sleep(3)
 driver.quit()
