@@ -12,6 +12,7 @@ It uses "attribute selectors (ID)" and "XPath" to interact with the webpage.
 ## Install Dependencies:
 
 pip install selenium
+
 pip install webdriver-manager
 
 🔍 What the Script Does
